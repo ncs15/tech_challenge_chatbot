@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    #chat-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 90%;
+        width:500px;
+        height: 600px;
+        overflow-y: auto;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 20px auto;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        color: #333;
+        margin-top: 0;
+
+    }
+    .message-container {
+        overflow-y: auto;
+    }
+    .message {
+        padding: 5px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        font-size:15px
+
+    }
+    .bot-message {
+        background-color: #e6f2ff;
+        text-align: center;
+        width:70%;
+        font-size:13px
+    }
+    .info-message {
+        background-color: #e7e7e7;
+        text-align: left;
+        width:70%;
+    }
+    .user-message {
+        background-color: #0084ff;
+        color: white;
+        text-align: right;
+        width:50%;
+        margin-left: auto;
+    }
+    form {
+        text-align: center;
+        margin-top: auto; /* Pushes the form to the bottom */
+    }
+    input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        margin-top: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #0084ff;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+function sendMessage(message) {
+    // Make data to can click on it
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/';
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = 'message';
+    hiddenField.value = message;
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+    }
+
+ // Function to scroll the chat to the bottom
+function scrollToBottom() {
+    const messageContainer = document.getElementById('message-container');
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+
+    // Call the function every time the page loads and when new messages are added
+    window.onload = scrollToBottom;
+</script>
+
+<div style="background-color: #007bff; color: white; text-align: left; font-size: 20px; margin-bottom: 0; height: 40px; display: flex; align-items: center; padding: 0 10px;">
+    LSEG ChatBot
+</div>
+<div id="chat-box">
+
+    <div id="message-container" class="message-container">
+        {% for sender, message in conversation %}
+            <div class="message {{ 'bot-message' if sender == 'Bot' else 'user-message' if sender == 'You' else 'info-message' }}" {% if sender == 'Bot' %}onclick="sendMessage('{{ message }}')" style="cursor: pointer;"{% endif %}>
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <div style="border: 1px solid #ccc; padding: 10px; border-radius: 4px; text-align: left;">
+    Please choose an option by clicking in the chat...
+    </div>
+
+</div>
+
+{% endblock %}
