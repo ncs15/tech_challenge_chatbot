@@ -1,6 +1,6 @@
 Steps to run the code:
   1.  Clone the repo
-  2.  Optinal:
+  2.  Optional:
       a. create a venv using: python -m venv venv
       b. activate the venv: venv\Scripts\activate
   3.  pip install -r requirements.txt
