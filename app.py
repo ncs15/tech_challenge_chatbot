@@ -14,7 +14,7 @@ def get_data():
         with open(file_name) as f:
             return json.load(f)
     except FileNotFoundError:
-        print("Error: The file 'Chatbot - stock data.json' was not found.")
+        print(f"Error: The file '{file_name}' was not found.")
         return None  # Or return an empty list/dict depending on your use case
     except json.JSONDecodeError:
         print(f"Error: The file '{file_name}' contains invalid JSON.")
