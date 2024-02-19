@@ -10,13 +10,14 @@ app.config["SESSION_PERMANENT"] = False
 def get_data():
     #handle json reading
     try:
-        with open('stick.json') as f:
+        file_name='Chatbot - stock data.json'
+        with open(file_name) as f:
             return json.load(f)
     except FileNotFoundError:
-        print("Error: The file 'stick.json' was not found.")
+        print("Error: The file 'Chatbot - stock data.json' was not found.")
         return None  # Or return an empty list/dict depending on your use case
     except json.JSONDecodeError:
-        print("Error: The file 'stick.json' contains invalid JSON.")
+        print(f"Error: The file '{file_name}' contains invalid JSON.")
         return None  # Or handle as appropriate
 
 
